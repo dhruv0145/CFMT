@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Round:</h5>
+			<hr>
+		<!--	<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Customer</a>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Place Order</a>-->
+			{% for k,v in d.items %}
+				{%if forloop.first%}
+				<h3>{{v.round}}</h3>
+				{%endif%}
+				{%endfor%}
+		</div>
+	</div>
+
+	
+	<div class="col-md">
+		<div class="card card-body">
+			<div class="scroll">
+			<h5>Company List</h5>
+			<hr>
+			<h6 style="text-align: center;padding: 10px">
+				{% for k,v in d.items %}
+				{{v.company}}<br>
+				{%endfor%}</h6>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>category</th>
+					<th>city</th>
+					<th>company</th>
+					<th>fundedDate</th>
+					<th>numEmps</th>
+					<th>permalink</th>
+					<th>raisedAmt</th>
+					<th>raisedCurrency</th>
+					<th>round</th>
+					<th>state</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for k,i in d.items %}
+				<tr>
+					<td>{{i.category}}</td>
+					<td>{{i.city}}</td>
+					<td>{{i.company}}</td>
+					<td>{{i.fundedDate}}</td>
+					<td>{{i.numEmps}}</td>
+					<td>{{i.permalink}}</td>
+					<td>{{i.raisedAmt}}</td>
+					<td>{{i.raisedCurrency}}</td>
+					<td>{{i.round}}</td>
+					<td>{{i.state}}</td>
+					<td><a class="btn btn-sm btn-info" href="">Update</a></td>
+
+							<td><a class="btn btn-sm btn-danger" href="">Delete</a></td>	
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<script>
+	var pl="{{pl}}"
+	var dataURL=`/analytics/companybarapi/${pl}/`
+	$.ajax({
+			method:'GET',
+			url: dataURL,
+			success : function(response){
+				console.log('RESPONSE:',response)
+				var s=response
+				const data = {
+  datasets: [{
+    label: 'Fundings',
+    data: s,
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+};	
+	const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    scales: {
+    	x:{
+    		type:'time',
+    		time:{
+    			unit: 'day',
+    		}
+
+    	},
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+};
+
+const myChart = new Chart(
+			    document.getElementById('myChart'),
+			    config
+			  );}
+			
+
+			})
+	
+</script>
+
+{% endblock %}

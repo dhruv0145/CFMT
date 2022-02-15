@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card text-center">
+  <div class="card-body">
+    <h1>Welcome To myapp</h1>
+    <p>This is an index page app</p>
+   <!-- <a class="btn btn-dark" href="{% url 'myapp:show'%}">
+        Analytics</a>-->
+    <a class="btn btn-dark" href="{% url 'myapp:stateData'%}">
+        State-wise</a>
+    <a class="btn btn-dark" href="{% url 'myapp:categoryData'%}">
+        Category-wise</a>
+    <a class="btn btn-dark" href="{% url 'myapp:crud'%}">
+        Add Entry</a>
+    <div class="row">
+    <div class="col-md-5">
+
+        <hr>
+        
+            <div class="scroll">
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Company</th>
+                </tr>
+                {% for i in cList %}
+                        <tr>
+                            <td><a class="btn btn-sm btn-info" href="{% url 'myapp:company' i %}">View</a></td>
+                            <td>{{i}}</td>
+                        
+                        </tr>
+                        {% endfor %}
+
+            </table>
+        </div>
+        
+
+    </div>
+    <div >
+    <div >
+        <hr>
+            <div class="scroll">
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Rounds</th>
+                </tr>
+                {% for i in rnds %}
+                        <tr>
+                            <td><a class="btn btn-sm btn-info" href="{% url 'myapp:round' i %}">View</a></td>
+                            <td>{{i}}</td>
+                        
+                        </tr>
+                        {% endfor %}
+
+            </table>
+        </div>
+        
+    </div>    
+
+  </div>
+  </div>
+{% endblock %}

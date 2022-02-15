@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<h1 class="mb-5 text-center">State Chart</h1>
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<script>
+	var state={
+		'labels':[],
+		'datasets':[],
+	}
+	var statenames=[]
+	var svalue=[]
+	var dataURL=`/analytics/stateapi/`
+	$.ajax({
+			method:'GET',
+			url: dataURL,
+			success : function(response){
+				console.log('RESPONSE:',response)
+				for (var i in response){
+					var key=i
+					var value=response[i]
+					statenames.push(key)
+					svalue.push(value)
+
+				}
+				console.log('datasets value',svalue)
+				const data = {
+				  labels: statenames,
+				  datasets: [{
+				    label: 'My First Dataset',
+				    data: svalue,
+				    backgroundColor: [
+				      'rgb(255, 99, 132)',
+				      'rgb(54, 162, 235)',
+				      'rgb(255, 205, 86)',
+				      'rgb(255, 110, 86)'
+    									],
+    				hoverOffset: 4
+				  }]
+				};
+				console.log('data',data)
+				const config = {
+				  type: 'pie',
+				  data: data,
+				};
+			
+			  const myChart = new Chart(
+			    document.getElementById('myChart'),
+			    config
+			  );
+			},
+			error: function(error) {
+				console.log('error in request: ', error)
+			}		
+		})
+</script>
+
+{% endblock %}

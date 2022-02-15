@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Add Entry</h1>
+
+<form action="/" method="POST">
+	{% csrf_token %}
+
+	<p>category:</p>	
+	<p><input type="text" name="category"></p>
+	<p>city:</p>
+	<p><input type="text" name="city"></p>
+  <p>company:</p>
+	<p><input type="text" name="company"></p>
+	<p>fundedDate:</p>
+	<p><input type="text" name="fundedDate"></p>
+	<p>numEmps:</p>
+	<p><input type="text" name="numEmps"></p>
+	<p>permalink:</p>
+	<p><input type="text" name="permalink"></p>
+	<p>raisedAmt:</p>
+	<p><input type="number" name="raisedAmt"></p>
+	<p>raisedCurrency:</p>
+	<p><input type="text" name="raisedCurrency"></p>
+	<p>round:</p>
+	<p><input type="text" name="round"></p>
+	<p>state:</p>
+	<p><input type="text" name="state"></p>
+	<p><input type="submit" name="submit"></p>
+</form>
+
+{% endblock %}
+
